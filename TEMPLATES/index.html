@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Home Automation</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     1. LANGUAGE / WELCOME SCREEN
+===================================================== -->
+
+<div id="welcomeScreen" class="setup-screen">
+
+    <div class="setup-box">
+
+        <div class="setup-logo">
+            🏠
+        </div>
+
+        <h1>Welcome to Smart Home</h1>
+
+        <p>
+            Your simple and intelligent home automation system.
+        </p>
+
+        <h2>🌐 Choose Your Language</h2>
+
+        <select id="languageSelect">
+
+            <option value="en">
+                🇬🇧 English
+            </option>
+
+            <option value="mr">
+                🇮🇳 मराठी
+            </option>
+
+            <option value="hi">
+                🇮🇳 हिन्दी
+            </option>
+
+        </select>
+
+        <button onclick="showLogin()">
+            Continue →
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     2. LOGIN SCREEN
+===================================================== -->
+
+<div id="loginScreen"
+     class="setup-screen"
+     style="display:none;">
+
+    <div class="login-box">
+
+        <div class="setup-logo">
+            🏠
+        </div>
+
+        <h1>Welcome Back!</h1>
+
+        <p>
+            Login to your Smart Home
+        </p>
+
+
+        <!-- EMAIL -->
+
+        <label>
+            Email
+        </label>
+
+        <input type="email"
+               id="loginEmail"
+               placeholder="Enter your email">
+
+
+        <!-- PASSWORD -->
+
+        <label>
+            Password
+        </label>
+
+        <input type="password"
+               id="loginPassword"
+               placeholder="Enter your password">
+
+
+        <!-- REMEMBER -->
+
+        <div class="remember-row">
+
+            <label>
+
+                <input type="checkbox"
+                       id="rememberMe">
+
+                Remember me
+
+            </label>
+
+            <a href="#"
+               onclick="forgotPassword()">
+
+                Forgot Password?
+
+            </a>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <button onclick="loginUser()">
+
+            🔐 Login
+
+        </button>
+
+
+        <div class="or-text">
+
+            ───── OR ─────
+
+        </div>
+
+
+        <!-- GOOGLE -->
+
+        <button class="google-button"
+                onclick="googleLogin()">
+
+            🔵 Continue with Google
+
+        </button>
+
+
+        <!-- CREATE ACCOUNT -->
+
+        <p class="signup-text">
+
+            New to Smart Home?
+
+            <a href="#"
+               onclick="showSignup()">
+
+                Create Account
+
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     3. CREATE ACCOUNT
+===================================================== -->
+
+<div id="signupScreen"
+     class="setup-screen"
+     style="display:none;">
+
+    <div class="login-box">
+
+        <div class="setup-logo">
+            🏠
+        </div>
+
+        <h1>Create Account</h1>
+
+        <p>
+            Create your Smart Home account
+        </p>
+
+
+        <label>
+            Full Name
+        </label>
+
+        <input type="text"
+               id="signupName"
+               placeholder="Enter your name">
+
+
+        <label>
+            Email
+        </label>
+
+        <input type="email"
+               id="signupEmail"
+               placeholder="Enter your email">
+
+
+        <label>
+            Password
+        </label>
+
+        <input type="password"
+               id="signupPassword"
+               placeholder="Create password">
+
+
+        <label>
+            Confirm Password
+        </label>
+
+        <input type="password"
+               id="signupConfirm"
+               placeholder="Confirm password">
+
+
+        <button onclick="createAccount()">
+
+            Create Account
+
+        </button>
+
+
+        <p class="signup-text">
+
+            Already have an account?
+
+            <a href="#"
+               onclick="showLogin()">
+
+                Login
+
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     4. ESP32 SETUP
+===================================================== -->
+
+<div id="espSetupScreen"
+     class="setup-screen"
+     style="display:none;">
+
+    <div class="setup-box">
+
+        <div class="setup-logo">
+            📡
+        </div>
+
+        <h1>Connect Your Smart Home</h1>
+
+        <p>
+            Make sure your ESP32 is powered ON.
+        </p>
+
+
+        <div class="esp-illustration">
+
+            📡
+
+            <br>
+
+            <span>
+                ESP32 Controller
+            </span>
+
+        </div>
+
+
+        <button onclick="findESP32()">
+
+            🔍 Find My ESP32
+
+        </button>
+
+
+        <div class="or-text">
+
+            ───── OR ─────
+
+        </div>
+
+
+        <button onclick="scanQR()">
+
+            📷 Scan QR Code
+
+        </button>
+
+
+        <!-- DEVICE FOUND -->
+
+        <div id="deviceFound"
+             style="display:none;">
+
+            <div class="device-found">
+
+                <h3>
+                    🟢 ESP32 Found
+                </h3>
+
+                <p>
+                    Smart Home Controller
+                </p>
+
+                <button onclick="connectESP32()">
+
+                    🔗 Connect
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     5. SIDEBAR
+===================================================== -->
+
+<div id="dashboardArea"
+     style="display:none;">
+
+<div class="sidebar">
+
+    <div class="logo">
+        🏠 Smart Home
+    </div>
+
+
+    <ul class="menu">
+
+        <li class="active"
+            onclick="showPage('dashboard')">
+
+            🏠 Dashboard
+
+        </li>
+
+        <li onclick="showPage('rooms')">
+            🛋 Rooms
+        </li>
+
+        <li onclick="showPage('devices')">
+            💡 Devices
+        </li>
+
+        <li onclick="showPage('automation')">
+            🤖 Automations
+        </li>
+
+        <li onclick="showPage('security')">
+            🛡 Security
+        </li>
+
+        <li onclick="showPage('camera')">
+            📷 Camera
+        </li>
+
+        <li onclick="showPage('environment')">
+            🌡 Environment
+        </li>
+
+        <li onclick="showPage('garden')">
+            🌱 Garden
+        </li>
+
+        <li onclick="showPage('energy')">
+            ⚡ Energy
+        </li>
+
+        <li onclick="showPage('notifications')">
+            🔔 Notifications
+        </li>
+
+        <li onclick="showPage('activity')">
+            📜 Activity
+        </li>
+
+        <li onclick="showPage('esp32')">
+            📡 ESP32 Devices
+        </li>
+
+        <li onclick="showPage('settings')">
+            ⚙ Settings
+        </li>
+
+    </ul>
+
+</div>
+
+
+
+<!-- =====================================================
+     6. MAIN DASHBOARD
+===================================================== -->
+
+<div class="main">
+
+<header>
+
+    <div>
+
+        <h1>
+            🏠 Smart Home Dashboard
+        </h1>
+
+        <p>
+            Your home. Your control. Your comfort.
+        </p>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <div id="currentTime"
+             class="system-time">
+
+            Loading...
+
+        </div>
+
+
+        <div class="profile">
+
+            👤 <span id="userName">
+                User
+            </span>
+
+        </div>
+
+
+        <button onclick="logoutUser()"
+                class="logout-button">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     DASHBOARD PAGE
+===================================================== -->
+
+<div id="dashboard"
+     class="page">
+
+
+<!-- CONNECTION -->
+
+<section>
+
+    <div class="connection-card">
+
+        <div>
+
+            <h3>
+                📡 Smart Home Controller
+            </h3>
+
+            <p>
+                ESP32 Device
+            </p>
+
+        </div>
+
+        <div class="online">
+
+            🟢 Online
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- GAUGES -->
+
+<section>
+
+    <h2>
+        📊 Live Home Status
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card gauge-card">
+
+            <div class="gauge">
+
+                <div class="gauge-value"
+                     id="tempGauge">
+
+                    28°C
+
+                </div>
+
+            </div>
+
+            <h3>
+                🌡 Temperature
+            </h3>
+
+            <p>
+                Normal
+            </p>
+
+        </div>
+
+
+
+        <div class="card gauge-card">
+
+            <div class="gauge">
+
+                <div class="gauge-value"
+                     id="humidityGauge">
+
+                    60%
+
+                </div>
+
+            </div>
+
+            <h3>
+                💧 Humidity
+            </h3>
+
+            <p>
+                Normal
+            </p>
+
+        </div>
+
+
+
+        <div class="card gauge-card">
+
+            <div class="gauge">
+
+                <div class="gauge-value"
+                     id="powerGauge">
+
+                    520W
+
+                </div>
+
+            </div>
+
+            <h3>
+                ⚡ Power
+            </h3>
+
+            <p>
+                Medium
+            </p>
+
+        </div>
+
+
+
+        <div class="card gauge-card">
+
+            <div class="gauge">
+
+                <div class="gauge-value"
+                     id="soilGauge">
+
+                    65%
+
+                </div>
+
+            </div>
+
+            <h3>
+                🌱 Soil Moisture
+            </h3>
+
+            <p>
+                Good
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- QUICK CONTROLS -->
+
+<section>
+
+    <h2>
+        🎛 Quick Controls
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                💡 Lights
+            </h3>
+
+            <button onclick="lightOn()">
+                ON
+            </button>
+
+            <button onclick="lightOff()">
+                OFF
+            </button>
+
+            <p>
+                Status:
+                <span id="lightStatus">
+                    OFF
+                </span>
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <h3>
+                🌀 Fan
+            </h3>
+
+            <button onclick="fanOn()">
+                ON
+            </button>
+
+            <button onclick="fanOff()">
+                OFF
+            </button>
+
+            <p>
+                Status:
+                <span id="fanStatus">
+                    OFF
+                </span>
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <h3>
+                🔌 Smart Plug
+            </h3>
+
+            <button onclick="plugOn()">
+                ON
+            </button>
+
+            <button onclick="plugOff()">
+                OFF
+            </button>
+
+            <p>
+                Status:
+                <span id="plugStatus">
+                    OFF
+                </span>
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <h3>
+                🚪 Door
+            </h3>
+
+            <button onclick="lockDoor()">
+                LOCK
+            </button>
+
+            <button onclick="unlockDoor()">
+                UNLOCK
+            </button>
+
+            <p>
+                Status:
+                <span id="doorStatus">
+                    LOCKED
+                </span>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ROOMS -->
+
+<section>
+
+    <h2>
+        🏠 My Rooms
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                🛋 Living Room
+            </h3>
+
+            <p>
+                4 Devices
+            </p>
+
+            <button>
+                Open Room
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🛏 Bedroom
+            </h3>
+
+            <p>
+                3 Devices
+            </p>
+
+            <button>
+                Open Room
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🍳 Kitchen
+            </h3>
+
+            <p>
+                4 Devices
+            </p>
+
+            <button>
+                Open Room
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🌱 Garden
+            </h3>
+
+            <p>
+                2 Devices
+            </p>
+
+            <button>
+                Open Room
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- AUTOMATION -->
+
+<section>
+
+    <h2>
+        🤖 Smart Automations
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                🌅 Good Morning
+            </h3>
+
+            <p>
+                Start your morning automatically.
+            </p>
+
+            <button>
+                Activate
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🌙 Good Night
+            </h3>
+
+            <p>
+                Turn off devices and lock doors.
+            </p>
+
+            <button>
+                Activate
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🏠 Away Mode
+            </h3>
+
+            <p>
+                Secure your home automatically.
+            </p>
+
+            <button>
+                Activate
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🎬 Movie Mode
+            </h3>
+
+            <p>
+                Create movie environment.
+            </p>
+
+            <button>
+                Activate
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ENERGY -->
+
+<section>
+
+    <h2>
+        ⚡ Energy Overview
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                Current Power
+            </h3>
+
+            <h2>
+                520 W
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Today's Usage
+            </h3>
+
+            <h2>
+                3.8 kWh
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                This Month
+            </h3>
+
+            <h2>
+                84.6 kWh
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Estimated Bill
+            </h3>
+
+            <h2>
+                ₹642
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- SECURITY -->
+
+<section>
+
+    <h2>
+        🛡 Security
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                Security
+            </h3>
+
+            <h2 id="security">
+                ARMED
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🚶 Motion
+            </h3>
+
+            <h2 id="motion">
+                No Motion
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🔥 Smoke
+            </h3>
+
+            <h2>
+                Safe
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🧪 Gas
+            </h3>
+
+            <h2>
+                Safe
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ACTIVITY -->
+
+<section>
+
+    <h2>
+        📜 Recent Activity
+    </h2>
+
+
+    <div class="card">
+
+        <ul id="logs">
+
+            <li>
+                System Started
+            </li>
+
+            <li>
+                ESP32 Connected
+            </li>
+
+            <li>
+                Dashboard Loaded
+            </li>
+
+        </ul>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     SETTINGS
+===================================================== -->
+
+<div id="settings"
+     class="page"
+     style="display:none;">
+
+    <section>
+
+        <h2>
+            ⚙ Settings
+        </h2>
+
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <h3>
+                    🌐 Language
+                </h3>
+
+                <select>
+
+                    <option>
+                        English
+                    </option>
+
+                    <option>
+                        मराठी
+                    </option>
+
+                    <option>
+                        हिन्दी
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🎨 Appearance
+                </h3>
+
+                <button>
+                    🌙 Dark Mode
+                </button>
+
+                <button>
+                    ☀️ Light Mode
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    👤 Profile
+                </h3>
+
+                <p id="profileName">
+                    User
+                </p>
+
+                <button>
+                    Edit Profile
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🔐 Security
+                </h3>
+
+                <button>
+                    Security Settings
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<!-- ESP32 -->
+
+<div id="esp32"
+     class="page"
+     style="display:none;">
+
+    <section>
+
+        <h2>
+            📡 ESP32 Devices
+        </h2>
+
+
+        <div class="card">
+
+            <h3>
+                Smart Home Controller
+            </h3>
+
+            <p>
+                🟢 Connected
+            </p>
+
+            <button onclick="findESP32()">
+
+                🔍 Find Device
+
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 Smart Home Automation
+    </p>
+
+    <p>
+        Developed by Yash Wamane
+    </p>
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+
+<!-- JAVASCRIPT -->
+
+<script src="{{ url_for('static', filename='js/script.js') }}">
+</script>
+
+
+</body>
+
+</html>
